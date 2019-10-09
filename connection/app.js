@@ -2,47 +2,61 @@ const contract = require('truffle-contract');
 const SimpleStorageContract = require('../build/contracts/SimpleStorage.json');
 const simpleStorage = contract(SimpleStorageContract)
 
-let Account;
+let CurrentInstance = null;
 
-function start() {
-  return new Promise(function (resolve, reject) {
-    simpleStorage.setProvider(self.web3.currentProvider);
-    self.web3.eth.getAccounts(function (err, FetchedAccounts) {
-      if (err != null) {
-        console.log("There was an error fetching your accounts.");
-        reject(err);
-      } else if (accs.length == 0) {
-        console.log("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
-        reject("No Accounts Available");
-      } else {
-        Account = FetchedAccounts[0];
-        console.log(FetchedAccounts);
-        resolve();
-      }
-    });
-  })
+function start(Callback) {
+  console.log("Getting Accounts");
+  simpleStorage.setProvider(this.web3.currentProvider);
+  this.web3.eth.getAccounts(function (err, FetchedAccounts) {
+    if (err) {
+      console.log("There was an error fetching your accounts.");
+      console.log(err);
+      Callback(null);
+    } else if (FetchedAccounts.length == 0) {
+      console.log("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+      Callback(null);
+    } else {
+      console.log(FetchedAccounts);
+      Callback(FetchedAccounts);
+    }
+  });
 }
 
-function UploadHash(Hash) {
-  return new Promise(function (resolve, reject) {
-    simpleStorage.setProvider(this.web3.currentProvider)
-    simpleStorage.deployed().then((instance) => {
-      instance.set(Hash,Account)
-      .then((result)=>{
-        console.log("Upload Successful");
-        resolve(result[0].hash);
-      }).catch((err)=>{
-        console.log(err);
-        reject(err);
-      })
-    }).catch((err)=>{
-      console.log(err);
-      reject(err);
-    });
+function UploadHash(FileHashArray, Account, Callback) {
+  console.log("Uploading to Blockchain");
+  console.log(FileHashArray);
+  simpleStorage.setProvider(this.web3.currentProvider)
+  simpleStorage.deployed().then((instance) => {
+    CurrentInstance = instance;
+    return CurrentInstance.set(FileHashArray, { from: Account });
+  }).then((UploadResponse) => {
+    console.log(UploadResponse);
+    Callback("Upload Successful");
   })
+  .catch((err) => {
+    console.log(err);
+    Callback(null);
+  });
+}
+
+function FetchHash(Account, Callback){
+  console.log("Fetching Data from Blockchain");
+  simpleStorage.setProvider(this.web3.currentProvider)
+  simpleStorage.deployed().then((instance) => {
+    CurrentInstance = instance;
+    return CurrentInstance.get({ from: Account });
+  }).then((FetchedData) => {
+    console.log("Data Fetched Successfully");
+    console.log(FetchedData);
+    Callback(FetchedData);
+  }).catch((err) => {
+    console.log(err);
+    Callback(null);
+  });
 }
 
 module.exports = {
   start,
-  UploadHash
+  UploadHash,
+  FetchHash
 }

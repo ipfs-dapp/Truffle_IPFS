@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>IPFS - Dapp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="jqueryui.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/blockchain/My-Wallet-V3-Frontend/master/img/favicon/favicon.ico"
+    />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <style media="screen">
+        .ui.placeholder.segment .button,
+        .ui.placeholder.segment .field,
+        .ui.placeholder.segment textarea,
+        .ui.placeholder.segment>.ui.input {
+            max-width: unset;
+        }
+    </style>
+    <script src="jquery.js"></script>
+    <script src="jqueryui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <style>
+        .file-upload {
+            display: block;
+            text-align: center;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .file-upload .file-select {
+            display: block;
+            border: 1px solid #dce4ec;
+            color: #34495e;
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            text-align: left;
+            background: #FFFFFF;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .file-upload .file-select .file-select-button {
+            background: #dce4ec;
+            padding: 0 10px;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .file-upload .file-select .file-select-name {
+            line-height: 40px;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .file-upload .file-select {
+            border-color: #34495e;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload .file-select .file-select-button {
+            background: #34495e;
+            color: #FFFFFF;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload.active .file-select {
+            border-color: #3fa46a;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload.active .file-select .file-select-button {
+            background: #3fa46a;
+            color: #FFFFFF;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload .file-select input[type=file] {
+            z-index: 100;
+            cursor: pointer;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        .file-upload .file-select.file-select-disabled {
+            opacity: 0.65;
+        }
+
+        .file-upload .file-select.file-select-disabled {
+            cursor: default;
+            display: block;
+            border: 1px solid #dce4ec;
+            color: #34495e;
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            margin-top: 5px;
+            text-align: left;
+            background: #FFFFFF;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .file-upload .file-select.file-select-disabled .file-select-button {
+            background: #dce4ec;
+            color: #666666;
+            padding: 0 10px;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .file-upload .file-select.file-select-disabled .file-select-name {
+            line-height: 40px;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .file-select,
+        .file-upload {
+            border-radius: 5px;
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: aqua;
+            background-size: cover;
+        }
+
+        .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            padding: 40px;
+            background: rgba(0, 0, 0, .8);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
+            border-radius: 10px;
+        }
+
+        .box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .box .inputbox {
+            position: relative;
+        }
+
+        .box .inputbox input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+        }
+
+        .box .inputbox label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            letter-spacing: 1px;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .box .inputbox input:focus~label,
+        .box .inputbox input:valid~label {
+            top: -18px;
+            left: 0;
+            color: #03a9f4;
+            font-size: 12px;
+        }
+
+        .box input[type="submit"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #03a9f4;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+        <div class="ui inverted segment">
+                <div id="NavigationTabs" class="ui inverted secondary menu">
+                  <a href="/" class="item">
+                    Home
+                  </a>
+                  <a id="UploadFile" href="dashboard.html" class="active item">
+                    Upload File
+                  </a>
+                  <a id="ViewFile" class="item">
+                    View File
+                  </a>
+                  <a id="ArticlesTab" href="dashboard.html" class="item">
+                      Articles
+                  </a>
+                  <a id="" class="item">
+                      <input id="ImageSearchBox" type="text" placeholder="Search" style="padding: 5px;border-radius: 5px;">
+                  </a>
+                  <a href="login.html" style="margin-left: 45%;color: white;"  class="item">
+                    Login
+                  </a>
+                  <a href="" style="margin-left: 0%;color: white;"  class="item">
+                      Signup
+                  </a>
+                </div>
+              </div>
+
+    <div class="box">
+        <h2>Login</h2>
+        <form action="">
+            <div class="inputbox">
+                <input type="text" name="" required>
+                <label>Username</label>
+            </div>
+            <div class="inputbox">
+                <input type="password" name="" required>
+                <label>Password</label>
+            </div>
+            <input type="submit" name="" value="Submit">
+        </form>
+    </div>
+
+</body>
+
+</html>

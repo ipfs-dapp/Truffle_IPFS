@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>IPFS - Dapp</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="jqueryui.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/blockchain/My-Wallet-V3-Frontend/master/img/favicon/favicon.ico"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <style media="screen">
+      .ui.placeholder.segment .button,
+      .ui.placeholder.segment .field,
+      .ui.placeholder.segment textarea,
+      .ui.placeholder.segment > .ui.input {
+        max-width: unset;
+      }
+    </style>
+    <script src="jquery.js"></script>
+    <script src="jqueryui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="script.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .file-upload {
+            display: block;
+            text-align: center;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .file-upload .file-select {
+            display: block;
+            border: 1px solid #dce4ec;
+            color: #34495e;
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            text-align: left;
+            background: #FFFFFF;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .file-upload .file-select .file-select-button {
+            background: #dce4ec;
+            padding: 0 10px;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .file-upload .file-select .file-select-name {
+            line-height: 40px;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .file-upload .file-select {
+            border-color: #34495e;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload .file-select .file-select-button {
+            background: #34495e;
+            color: #FFFFFF;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload.active .file-select {
+            border-color: #3fa46a;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload.active .file-select .file-select-button {
+            background: #3fa46a;
+            color: #FFFFFF;
+            transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+        }
+
+        .file-upload .file-select input[type=file] {
+            z-index: 100;
+            cursor: pointer;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        .file-upload .file-select.file-select-disabled {
+            opacity: 0.65;
+        }
+
+        .file-upload .file-select.file-select-disabled {
+            cursor: default;
+            display: block;
+            border: 1px solid #dce4ec;
+            color: #34495e;
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            margin-top: 5px;
+            text-align: left;
+            background: #FFFFFF;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .file-upload .file-select.file-select-disabled .file-select-button {
+            background: #dce4ec;
+            color: #666666;
+            padding: 0 10px;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .file-upload .file-select.file-select-disabled .file-select-name {
+            line-height: 40px;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .file-select,
+        .file-upload {
+            border-radius: 5px;
+        }
+    </style>
+  </head>
+  <body id="DashboardPage" style="background : url('./img/3.png');
+  background-repeat: no-repeat;
+  background-size: cover;">
+    <div class="ui inverted segment">
+      <div id="NavigationTabs" class="ui inverted secondary menu">
+        <a href="/" class="item">
+          Home
+        </a>
+        <a id="UploadFile" class="active item">
+          Upload File
+        </a>
+        <a id="ViewFile" class="item">
+          View File
+        </a>
+        <a id="ArticlesTab" class="item">
+            Articles
+        </a>
+        <a id="" class="item">
+            <input id="ImageSearchBox" type="text" placeholder="Search" style="padding: 5px;border-radius: 5px;">
+        </a>
+        <a href="login.html" style="margin-left: 45%;color: white;"  class="item">
+          Login
+        </a>
+        <a href="" style="margin-left: 0%;color: white;"  class="item">
+            Signup
+        </a>
+      </div>
+    </div>
+
+    <div id="FileUploadForm">
+      <div class="ui two column centered  grid">
+        <div class="column">
+          <br />
+          <div
+            class="ui placeholder segment"
+            style="border: 1px solid black;box-shadow: 0 15px 25px rgba(231, 225, 225, 0.5);border-radius: 10px;"
+          >
+            <h2 class="ui icon header">
+              <div class="content">
+                <br />
+                UPLOAD FILE
+              </div>
+            </h2>
+
+            <h4 class="ui dividing header">File Information</h4>
+            <br />
+            <div class="row">
+              <div class="col-md-2">
+                <label>Title : </label>
+              </div>
+              <div class="col-md-10">
+                <input
+                  id="TitleOfFile"
+                  type="text"
+                  placeholder="Title"
+                  style="width: 100%;border-radius: 5px;padding: 5px;"
+                />
+              </div>
+            </div>
+            <br /><br />
+            <div class="row">
+              <div class="col-md-2">
+                <label>Description :</label>
+              </div>
+              <div class="col-md-10">
+                <textarea
+                  id="DescriptionOfFile"
+                  rows="2"
+                  style="width: 100%;border-radius: 5px;padding: 5px;border: 1px solid black"
+                ></textarea>
+              </div>
+
+              <br />
+            </div>
+            <br /><br />
+            <form enctype="multipart/form-data" id="ImageForm">
+              <!-- <input type="file" name="file" /> <br /> -->
+
+              <div class="file-upload">
+                <div class="file-select">
+                    <div class="file-select-button">Choose File</div>
+                    <div class="file-select-name">No file chosen</div>
+                    <input id="UploadImageInput" type="file" name="file" 
+                    style="margin-top: 5px;">
+                </div>
+            </div>
+
+              <br />
+              <input
+                type="submit"
+                value="Upload"
+                id="Submit-button"
+                class="ui button primary"
+                style="float: right;"
+              />
+              <br />
+              <br />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="UploadedFiles" style="display: none;color: white;">
+      <h1>
+        Upload Images to IPFS and store the IPFS hashcode on the Ethereum
+        Blockchain.
+      </h1>
+      <div id="ImageContainer" style="color: black;"></div>
+    </div>
+
+    <div
+      id="UploadingBufferModal"
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Uploading</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h3>Uploading ... Please wait.</h3>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
